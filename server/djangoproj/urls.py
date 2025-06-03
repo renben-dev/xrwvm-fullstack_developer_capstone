@@ -25,4 +25,6 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name="Home.html")),
     path('about/',TemplateView.as_view(template_name="About.html")),
     path('contact/', TemplateView.as_view(template_name="Contact.html")),
+    #added by renzo to review where the views come from
+    #path("chat/", views.chat_handler, name="chat"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

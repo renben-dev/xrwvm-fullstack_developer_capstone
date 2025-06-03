@@ -1,30 +1,227 @@
 <html>
 <head>
   <!-- Link the style sheet here -->
-  <link rel="stylesheet" href="/static/style.css">
+  
   <link rel="stylesheet" href="/static/bootstrap.min.css">
+  <link rel="stylesheet" href="/static/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <script>
+    function copyEmail(emailId) {
+      const email = document.getElementById(emailId);
+      navigator.clipboard.writeText(email.textContent).then(() => {
+        alert("Email copied to clipboard!");
+      });
+    }
+  </script>
+
+    <style>
+        /* Position the arrow fixed at bottom center, hidden by default */
+        .scroll-indicator {
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 2rem;
+        color: #555;
+        display: none; /* hide initially */
+        pointer-events: none;
+        user-select: none;
+        background: rgba(255,255,255,0.8);
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        text-align: center;
+        box-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+    </style>
 </head>
 <div>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
-    <div class="container-fluid">
-      <h2 style="padding-right: 5%;">Dealerships</h2>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" style="font-size: larger;" href="/contact">Contact Us</a>
-          </li>
-        </ul>
-      </div>
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
+        <div class="container-fluid">
+            <h2 style="padding-right: 5%;">Dealerships</h2>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarText">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link" style="font-size: larger;" aria-current="page" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" style="font-size: larger;" href="/contact">Contact Us</a>
+                </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    
+
+    <!-- <div class="container mt-4"> -->
+    <div class="container mt-4 " id="contacts-container-id">
+        <h2 class="text-center mb-4">Contact Us</h2>
+        <div class="row">
+          <!-- Left Column: Contact Info Cards -->
+          <div class="col-md-6">
+            <!-- Headquarters Card -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Headquarters</h5>
+                <p>📍 500 Capital Ave, Washington, DC</p>
+                <p>
+                  📧 <a href="mailto:hq@dealership.com" id="hq-email">hq@dealership.com</a>
+                  <i class="fas fa-copy img_icon" onclick="copyEmail('hq-email')" title="Copy Email"></i>
+                </p>
+                <p>☎️ +1 (202) 555-0100</p>
+                <p>🕒 Mon–Fri: 9 AM – 6 PM</p>
+                <div>
+                  <a href="#" class="me-2"><i class="fab fa-facebook fa-lg"></i></a>
+                  <a href="#" class="me-2"><i class="fab fa-x-twitter fa-lg"></i></a>
+                  <a href="#" class="me-2"><i class="fab fa-instagram fa-lg"></i></a>
+                  <a href="#" class="me-2"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+              </div>
+            </div>
+      
+            <!-- Branch Cards -->
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">New York Branch</h5>
+                <p>📍 100 Broadway, New York, NY</p>
+                <p>
+                    📧 <a href="mailto:ny@dealership.com" id="ny-email">ny@dealership.com</a>
+                    <i class="fas fa-copy img_icon" onclick="copyEmail('hq-email')" title="Copy Email"></i>
+                </p>
+                <p>☎️ +1 (212) 555-0111</p>
+              </div>
+            </div>
+      
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Los Angeles Branch</h5>
+                <p>📍 200 Sunset Blvd, Los Angeles, CA</p>
+                <p>
+                    📧 <a href="mailto:la@dealership.com" id="la-email">la@dealership.com</a>
+                    <i class="fas fa-copy img_icon" onclick="copyEmail('la-email')" title="Copy Email"></i>
+                </p>
+                <p>☎️ +1 (310) 555-0222</p>
+              </div>
+            </div>
+      
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Chicago Branch</h5>
+                <p>📍 300 Lakeshore Dr, Chicago, IL</p>
+                <p>
+                    📧 <a href="mailto:chi@dealership.com" id="chi-email">chi@dealership.com</a>
+                    <i class="fas fa-copy img_icon" onclick="copyEmail('chi-email')" title="Copy Email"></i>
+                </p>
+                <p>☎️ +1 (312) 555-0333</p>
+              </div>
+            </div>
+      
+            <div class="card mb-3">
+              <div class="card-body">
+                <h5 class="card-title">Toronto Branch</h5>
+                <p>📍 400 Queen St, Toronto, ON</p>
+                <p>
+                    📧 <a href="mailto:tor@dealership.com" id="tor-email">tor@dealership.com</a>
+                    <i class="fas fa-copy img_icon" onclick="copyEmail('tor-email')" title="Copy Email"></i>
+                </p>
+                <p>☎️ +1 (416) 555-0444</p>
+              </div>
+            </div>
+          </div>
+      
+          <!-- Right Column: Contact Form -to be sent to backend HUBSPOT microservice-->
+          <div class="col-md-6">
+            <div class="card form_panel">
+              <div class="card-body text-white">
+                <h5 class="card-title text-white">Send Us a Message</h5>
+                <form method="POST" action="/submit_contact_form">
+                  <div class="mb-3">
+                    <label for="fullName" class="form-label">Full Name</label>
+                    <input type="text" class="form-control" id="fullName" name="fullName" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="emailAddr" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="emailAddr" name="emailAddr" required>
+                  </div>
+                  <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <input type="text" class="form-control" id="subject" name="subject">
+                  </div>
+                  <div class="mb-3">
+                    <label for="message" class="form-label">Message</label>
+                    <textarea class="form-control" id="message" name="message" rows="5" required></textarea>
+                  </div>
+                  <button type="submit" class="btn btn-light">Submit</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
     </div>
-  </nav>
 </div>
+<!-- <div class="scroll-indicator" id="scroll-indicator">&#x25BC;</div> -->
+<div id="scroll-indicator-id" class="scroll-indicator" style="text-align:center; padding: 10px;">
+    &#x25BC;
+</div>
+
+<!-- Floating Chat Icon -->
+<div id="chat-icon" onclick="openChat()">
+    <i class="fas fa-comments"></i>
+</div>
+
+<!-- Chat Popup -->
+<div id="chat-box" class="chat-popup" style="display: none;">
+    <div class="chat-header">
+      <span>Live Chat</span>
+      <button onclick="closeChat()">×</button>
+    </div>
+    <div class="chat-body">
+      <p>Chat service coming soon...</p>
+      <!-- Placeholder for chat messages -->
+    </div>
+  </div>
+
+<script>
+    
+  
+    function checkIfSectionOverflows() {
+        const section = document.getElementById('contacts-container-id');
+        const arrow = document.getElementById('scroll-indicator-id');
+
+        const sectionBottom = section.offsetTop + section.offsetHeight;
+        const scrollBottom = window.scrollY + window.innerHeight;
+
+        if (scrollBottom < sectionBottom - 10) {
+            // Arrow visible when bottom of container is below view
+            arrow.style.display = 'block';
+        } else {
+            arrow.style.display = 'none';
+        }
+    }
+  
+    // Initial check
+    checkIfSectionOverflows();
+  
+    // Re-check on scroll and resize
+    window.addEventListener('scroll', checkIfSectionOverflows);
+    window.addEventListener('resize', checkIfSectionOverflows);
+
+    function openChat() {
+        document.getElementById("chat-box").style.display = "block";
+    }
+
+    function closeChat() {
+        document.getElementById("chat-box").style.display = "none";
+    }
+
+  </script>
+  
 </html>

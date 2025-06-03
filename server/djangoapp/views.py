@@ -63,3 +63,7 @@ def login_user(request):
 # Create a `add_review` view to submit a review
 # def add_review(request):
 # ...
+
+
+def chat_handler(request):
+    return JsonResponse({"status": "chat service coming soon"})
