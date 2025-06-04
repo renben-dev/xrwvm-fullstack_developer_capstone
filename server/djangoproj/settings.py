@@ -146,3 +146,5 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR,'frontend/static')
 ]
 
+
+print("CSRF_TRUSTED_ORIGINS:", CSRF_TRUSTED_ORIGINS)
