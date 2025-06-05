@@ -97,8 +97,19 @@ app.get('/fetchDealer/:id', async (req, res) => {
 //Express route to insert review
 app.post('/insert_review', express.raw({ type: '*/*' }), async (req, res) => {
   data = JSON.parse(req.body);
-  const documents = await Reviews.find().sort( { id: -1 } )
-  let new_id = documents[0]['id']+1
+
+  //renzo: below 2 lines are refactored below
+  //const documents = await Reviews.find().sort( { id: -1 } )
+  //let new_id = documents[0]['id']+1
+
+  //renzo: refactoring to avoid sorting ALL the documents in js
+  //not that mongodb applies any filtering/sorting first, before findOne is applied
+  const document = await Reviews.findOne().sort({ id: -1 })
+  let new_id = 1;
+  if(document){
+    new_id = document['id']+1
+  } 
+  
 
   const review = new Reviews({
 		"id": new_id,
