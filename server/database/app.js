@@ -18,17 +18,40 @@ const Reviews = require('./review');
 
 const Dealerships = require('./dealership');
 
-try {
-  Reviews.deleteMany({}).then(()=>{
-    Reviews.insertMany(reviews_data['reviews']);
-  });
-  Dealerships.deleteMany({}).then(()=>{
-    Dealerships.insertMany(dealerships_data['dealerships']);
-  });
+// try {
+//   Reviews.deleteMany({}).then(()=>{
+//     Reviews.insertMany(reviews_data['reviews']);
+//   });
+//   Dealerships.deleteMany({}).then(()=>{
+//     Dealerships.insertMany(dealerships_data['dealerships']);
+//   });
   
-} catch (error) {
-  res.status(500).json({ error: 'Error fetching documents' });
-}
+// } catch (error) {
+//   res.status(500).json({ error: 'Error fetching documents' });
+// }
+//renzo: I refactored the above block so 1.the original blok does not use await inside
+//so error may not be catch-ed properly
+//2.made the two data operations in paraller
+(async () => {
+    try {
+      const reviewsOps = (async () => {
+        await Reviews.deleteMany({});
+        await Reviews.insertMany(reviews_data['reviews']);
+      })();
+  
+      const dealersOps = (async () => {
+        await Dealerships.deleteMany({});
+        await Dealerships.insertMany(dealerships_data['dealerships']);
+      })();
+  
+      await Promise.all([reviewsOps, dealersOps]);
+  
+      console.log('Database reset successfully');
+    } catch (error) {
+      console.error('Error resetting database:', error);
+    }
+  })();
+  
 
 
 // Express route to home
