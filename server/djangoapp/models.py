@@ -1,8 +1,8 @@
 # Uncomment the following imports before adding the Model code
 
-# from django.db import models
-# from django.utils.timezone import now
-# from django.core.validators import MaxValueValidator, MinValueValidator
+from django.db import models
+from django.utils.timezone import now
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 # Create your models here.
@@ -12,7 +12,67 @@
 # - Description
 # - Any other fields you would like to include in car make model
 # - __str__ method to print a car make object
+class Person(models.Model): 
+    first_name = models.CharField(max_length=20) 
+    
+    last_name = models.CharField(max_length=20)
+    
 
+class CarMake(models.Model):
+    name = models.CharField(max_length = 100, null = False, blank = False)
+    description = models.TextField()
+    country_name = models.CharField(max_length = 50)
+    country_iso2 = models.CharField(max_length = 2)
+    country_iso3 = models.CharField(max_length = 3)
+
+    def clean(self):
+        super().clean()  # Call the parent class's clean method
+
+        self.name = self.name.strip().upper() if self.name else ''
+        self.description = self.description.strip() if self.description else ''
+        self.country_name = self.country_name.strip().upper() if self.country_name else ''
+        self.country_iso2 = self.country_iso2.strip().upper() if self.country_iso2 else ''
+        self.country_iso3 = self.country_iso3.strip().upper() if self.country_iso3 else ''
+        
+        if not self.name.strip():
+            raise ValidationError({'name': 'Name cannot be empty or contain only whitespace.'})
+        if self.country_iso2 and len(self.country_iso2.strip()) != 2:
+            raise ValidationError({'country_iso2': 'its must be a 2 character country code'})
+        if self.country_iso3 and len(self.country_iso3.strip()) != 3:
+            raise ValidationError({'country_iso3': 'its must be a 3 character country code'})
+
+    def save(self, *args, **kwargs):
+        # Call full_clean to ensure data is fully cleaned and validated
+        try:
+            self.full_clean()
+        except ValidationError as e:
+            # Handle the validation error
+            raise ValidationError(f"Validation failed: {e}")
+
+        # Call the parent class's save method
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+class CarModel(models.Model):
+    car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
+    dealer_id = models.IntegerField()
+
+
+    
+
+    def save(self, *args, **kwargs):
+        def save(self, *args, **kwargs):
+        # Call full_clean to ensure data is fully cleaned and validated
+        try:
+            self.full_clean()
+        except ValidationError as e:
+            # Handle the validation error
+            raise ValidationError(f"Validation failed: {e}")
+
+        # Call the parent class's save method
+        super().save(*args, **kwargs)
 
 # <HINT> Create a Car Model model `class CarModel(models.Model):`:
 # - Many-To-One relationship to Car Make model (One Car Make has many
