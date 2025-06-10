@@ -3,6 +3,8 @@
 from django.db import models
 from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
+import re
+from datetime import datetime, timedelta
 
 
 # Create your models here.
@@ -24,13 +26,18 @@ class CarMake(models.Model):
     country_name = models.CharField(max_length = 50)
     country_iso2 = models.CharField(max_length = 2)
     country_iso3 = models.CharField(max_length = 3)
+# Strip leading/trailing whitespace
+    s = s.strip()
+    # Replace one or more spaces with a single space
+    def remove_space_streaks(s):
+        return re.sub(r'\s+', ' ', s)
 
     def clean(self):
         super().clean()  # Call the parent class's clean method
 
-        self.name = self.name.strip().upper() if self.name else ''
-        self.description = self.description.strip() if self.description else ''
-        self.country_name = self.country_name.strip().upper() if self.country_name else ''
+        self.name = remove_space_streaks(self.name.strip().title()) if self.name else ''
+        self.description = remove_space_streaks(self.description.strip()) if self.description else ''
+        self.country_name = remove_space_streaks(self.country_name.strip().title()) if self.country_name else ''
         self.country_iso2 = self.country_iso2.strip().upper() if self.country_iso2 else ''
         self.country_iso3 = self.country_iso3.strip().upper() if self.country_iso3 else ''
         
@@ -56,9 +63,37 @@ class CarMake(models.Model):
         return self.name
 
 class CarModel(models.Model):
-    car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
-    dealer_id = models.IntegerField()
 
+    CAR_TYPES = [
+        ('SEDAN', 'Sedan'),
+        ('WAGON', 'Wagon'),
+        ('SUV', 'SUV'),
+        ('COUPE', 'Coupe'),
+        ('PICKUP', 'Pickup'),
+        ('VAN', 'Van')
+    ]
+    CAR_FUEL_TYPES = fuel_types = [
+        ('GASOLINE', 'Gasoline'),
+        ('DIESEL', 'Diesel'),
+        ('CNG', 'CNG'),
+        ('BIO-DIESEL', 'Bio-Diesel'),
+        ('LPG', 'LPG'),
+        ('ETHANOL', 'Ethanol'),
+        ('METHANOL', 'Methanol'),
+        ('HYDROGEN', 'Hydrogen'),
+        ('ELECTRIC', 'Electric'),
+        ('HYBRID', 'Hybrid (Plug-in & Non-Plug-in)'),
+        ('SOLAR', 'Solar Powered')
+    ]
+    car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
+    car_dealer_id = models.IntegerField()
+    car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
+    car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES)
+
+    year = model.IntegerField(validators=[
+        MaxValueValidator((datetime.now() - timedelta(days=1)).year),
+        MinValueValidator(2000)
+    ])
 
     
 
