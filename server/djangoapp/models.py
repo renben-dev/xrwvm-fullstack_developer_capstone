@@ -28,9 +28,9 @@ class Person(models.Model):
 class CarMake(models.Model):
     name = models.CharField(max_length = 100, null = False, blank = False)
     description = models.TextField()
-    country_name = models.CharField(max_length = 50)
-    country_iso2 = models.CharField(max_length = 2)
-    country_iso3 = models.CharField(max_length = 3)
+    country_name = models.CharField(max_length = 50, blank = True)
+    country_iso2 = models.CharField(max_length = 2, blank = True)
+    country_iso3 = models.CharField(max_length = 3, blank = True)
 
      # Replace one or more spaces with a single space
     def remove_space_streaks(self, s):
@@ -51,10 +51,10 @@ class CarMake(models.Model):
 
         if not self.name.strip():
             raise ValidationError({'name': 'Name cannot be empty or contain only whitespace.'})
-        if self.country_iso2 and len(self.country_iso2.strip()) != 2:
-            raise ValidationError({'country_iso2': 'its must be a 2 character country code'})
-        if self.country_iso3 and len(self.country_iso3.strip()) != 3:
-            raise ValidationError({'country_iso3': 'its must be a 3 character country code'})
+        # if self.country_iso2 and len(self.country_iso2.strip()) != 2:
+        #     raise ValidationError({'country_iso2': 'its must be a 2 character country code'})
+        # if self.country_iso3 and len(self.country_iso3.strip()) != 3:
+        #     raise ValidationError({'country_iso3': 'its must be a 3 character country code'})
 
     def save(self, *args, **kwargs):
         # Call full_clean to ensure data is fully cleaned and validated
@@ -94,25 +94,18 @@ class CarModel(models.Model):
         ('SOLAR', 'Solar Powered')
     ]
 
-    @staticmethod
-    def validate_max_year(value):
-        current_year = datetime.now().year
-        if value > current_year:
-            raise ValidationError(f"Year must be less than or \
-                                    equal to the current year ({current_year})")
     # Replace one or more spaces with a single space
     def remove_space_streaks(self, s):
         return re.sub(r'\s+', ' ', s)
 
-
     name = models.CharField(max_length = 50)
     car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
-    car_dealer_id = models.IntegerField()
+    
     car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
     car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES)
 
     year = models.IntegerField(validators=[
-        validate_max_year,
+         MinValueValidator(2025),
         MinValueValidator(2000)
     ])
 
