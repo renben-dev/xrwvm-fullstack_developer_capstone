@@ -100,7 +100,12 @@ class CarModel(models.Model):
         if value > current_year:
             raise ValidationError(f"Year must be less than or \
                                     equal to the current year ({current_year})")
+    # Replace one or more spaces with a single space
+    def remove_space_streaks(self, s):
+        return re.sub(r'\s+', ' ', s)
 
+
+    name = models.CharField(max_length = 50)
     car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
     car_dealer_id = models.IntegerField()
     car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
@@ -110,7 +115,6 @@ class CarModel(models.Model):
         validate_max_year,
         MinValueValidator(2000)
     ])
-
 
     def save(self, *args, **kwargs):
 
