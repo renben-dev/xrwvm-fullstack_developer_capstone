@@ -93,13 +93,21 @@ class CarModel(models.Model):
         ('HYBRID', 'Hybrid (Plug-in & Non-Plug-in)'),
         ('SOLAR', 'Solar Powered')
     ]
+
+    @staticmethod
+    def validate_max_year(value):
+        current_year = datetime.now().year
+        if value > current_year:
+            raise ValidationError(f"Year must be less than or \
+                                    equal to the current year ({current_year})")
+
     car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
     car_dealer_id = models.IntegerField()
     car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
     car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES)
 
     year = models.IntegerField(validators=[
-        MaxValueValidator((datetime.now() - timedelta(days=1)).year),
+        validate_max_year,
         MinValueValidator(2000)
     ])
 
