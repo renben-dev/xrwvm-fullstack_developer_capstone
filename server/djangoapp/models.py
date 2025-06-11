@@ -102,10 +102,10 @@ class CarModel(models.Model):
     car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
     
     car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
-    car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES)
+    car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES, blank = True)
 
     year = models.IntegerField(validators=[
-         MinValueValidator(2025),
+        MaxValueValidator(2025),
         MinValueValidator(2000)
     ])
 

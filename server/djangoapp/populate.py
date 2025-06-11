@@ -27,9 +27,9 @@ def initiate():
       {"name":"A6", "car_type":"SUV", "year": 2023, "car_make":car_make_instances[2]},
       {"name":"Sorrento", "car_type":"SUV", "year": 2023, "car_make":car_make_instances[3]},
       {"name":"Carnival", "car_type":"SUV", "year": 2023, "car_make":car_make_instances[3]},
-      {"name":"Cerato", "car_type":"Sedan", "year": 2023, "car_make":car_make_instances[3]},
-      {"name":"Corolla", "car_type":"Sedan", "year": 2023, "car_make":car_make_instances[4]},
-      {"name":"Camry", "car_type":"Sedan", "year": 2023, "car_make":car_make_instances[4]},
+      {"name":"Cerato", "car_type":"SEDAN", "year": 2023, "car_make":car_make_instances[3]},
+      {"name":"Corolla", "car_type":"SEDAN", "year": 2023, "car_make":car_make_instances[4]},
+      {"name":"Camry", "car_type":"SEDAN", "year": 2023, "car_make":car_make_instances[4]},
       {"name":"Kluger", "car_type":"SUV", "year": 2023, "car_make":car_make_instances[4]},
         # Add more CarModel instances as needed
     ]
