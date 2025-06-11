@@ -1,10 +1,15 @@
 # Uncomment the following imports before adding the Model code
+"""
+car make and model Django models
+"""
+import re
+from datetime import datetime, timedelta
 
 from django.db import models
 from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
-import re
-from datetime import datetime, timedelta
+from django.core.exceptions import ValidationError
+
 
 
 # Create your models here.
@@ -14,11 +19,11 @@ from datetime import datetime, timedelta
 # - Description
 # - Any other fields you would like to include in car make model
 # - __str__ method to print a car make object
-class Person(models.Model): 
-    first_name = models.CharField(max_length=20) 
-    
+class Person(models.Model):
+    first_name = models.CharField(max_length=20)
+
     last_name = models.CharField(max_length=20)
-    
+
 
 class CarMake(models.Model):
     name = models.CharField(max_length = 100, null = False, blank = False)
@@ -26,21 +31,24 @@ class CarMake(models.Model):
     country_name = models.CharField(max_length = 50)
     country_iso2 = models.CharField(max_length = 2)
     country_iso3 = models.CharField(max_length = 3)
-# Strip leading/trailing whitespace
-    s = s.strip()
-    # Replace one or more spaces with a single space
-    def remove_space_streaks(s):
+
+     # Replace one or more spaces with a single space
+    def remove_space_streaks(self, s):
         return re.sub(r'\s+', ' ', s)
 
     def clean(self):
         super().clean()  # Call the parent class's clean method
 
-        self.name = remove_space_streaks(self.name.strip().title()) if self.name else ''
-        self.description = remove_space_streaks(self.description.strip()) if self.description else ''
-        self.country_name = remove_space_streaks(self.country_name.strip().title()) if self.country_name else ''
-        self.country_iso2 = self.country_iso2.strip().upper() if self.country_iso2 else ''
-        self.country_iso3 = self.country_iso3.strip().upper() if self.country_iso3 else ''
-        
+        self.name = self.remove_space_streaks(self.name.strip().title()) if self.name else ''
+        self.description = self.remove_space_streaks(self.description.strip()) \
+            if self.description else ''
+        self.country_name = self.remove_space_streaks(self.country_name.strip().title()) \
+            if self.country_name else ''
+        self.country_iso2 = self.country_iso2.strip().upper() \
+            if self.country_iso2 else ''
+        self.country_iso3 = self.country_iso3.strip().upper() \
+            if self.country_iso3 else ''
+
         if not self.name.strip():
             raise ValidationError({'name': 'Name cannot be empty or contain only whitespace.'})
         if self.country_iso2 and len(self.country_iso2.strip()) != 2:
@@ -54,7 +62,7 @@ class CarMake(models.Model):
             self.full_clean()
         except ValidationError as e:
             # Handle the validation error
-            raise ValidationError(f"Validation failed: {e}")
+            raise ValidationError(f"Validation failed: {e}") from e
 
         # Call the parent class's save method
         super().save(*args, **kwargs)
@@ -90,21 +98,20 @@ class CarModel(models.Model):
     car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
     car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES)
 
-    year = model.IntegerField(validators=[
+    year = models.IntegerField(validators=[
         MaxValueValidator((datetime.now() - timedelta(days=1)).year),
         MinValueValidator(2000)
     ])
 
-    
 
     def save(self, *args, **kwargs):
-        def save(self, *args, **kwargs):
+
         # Call full_clean to ensure data is fully cleaned and validated
         try:
             self.full_clean()
         except ValidationError as e:
             # Handle the validation error
-            raise ValidationError(f"Validation failed: {e}")
+            raise ValidationError(f"Validation failed: {e}") from e
 
         # Call the parent class's save method
         super().save(*args, **kwargs)
