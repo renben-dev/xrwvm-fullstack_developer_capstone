@@ -15,40 +15,42 @@ from django.core.exceptions import ValidationError
 # - Any other fields you would like to include in car make model
 # - __str__ method to print a car make object
 class Person(models.Model):
-    first_name=models.CharField(max_length=20)
-    last_name=models.CharField(max_length=20)
+    first_name = models.CharField(max_length=20)
+    last_name = models.CharField(max_length=20)
 
 
 class CarMake(models.Model):
-    name=models.CharField(max_length=100, null=False, blank=False)
-    description=models.TextField()
-    country_name=models.CharField(max_length=50, blank=True)
-    country_iso2=models.CharField(max_length=2, blank=True)
-    country_iso3=models.CharField(max_length=3, blank=True)
+    name = models.CharField(max_length=100, null=False, blank=False)
+    description = models.TextField()
+    country_name = models.CharField(max_length=50, blank=True)
+    country_iso2 = models.CharField(max_length=2, blank=True)
+    country_iso3 = models.CharField(max_length=3, blank=True)
 
-     # Replace one or more spaces with a single space
+    # Replace one or more spaces with a single space
     def remove_space_streaks(self, s):
         return re.sub(r'\s+', ' ', s)
 
     def clean(self):
         super().clean()  # Call the parent class's clean method
 
-        self.name=self.remove_space_streaks(self.name.strip().title()) if self.name else ''
-        self.description=self.remove_space_streaks(self.description.strip()) \
+        self.name = \
+            self.remove_space_streaks(self.name.strip().title()) \
+            if self.name else ''
+        self.description = \
+            self.remove_space_streaks(self.description.strip()) \
             if self.description else ''
-        self.country_name=self.remove_space_streaks(self.country_name.strip().title()) \
+        self.country_name = \
+            self.remove_space_streaks(self.country_name.strip().title()) \
             if self.country_name else ''
-        self.country_iso2=self.country_iso2.strip().upper() \
+        self.country_iso2 = self.country_iso2.strip().upper() \
             if self.country_iso2 else ''
-        self.country_iso3=self.country_iso3.strip().upper() \
+        self.country_iso3 = self.country_iso3.strip().upper() \
             if self.country_iso3 else ''
 
         if not self.name.strip():
-            raise ValidationError({'name': 'Name cannot be empty or contain only whitespace.'})
-        # if self.country_iso2 and len(self.country_iso2.strip()) != 2:
-        #     raise ValidationError({'country_iso2': 'its must be a 2 character country code'})
-        # if self.country_iso3 and len(self.country_iso3.strip()) != 3:
-        #     raise ValidationError({'country_iso3': 'its must be a 3 character country code'})
+            raise ValidationError({
+                'name': 'Name cannot be empty or contain only whitespace.'
+            })
 
     def save(self, *args, **kwargs):
         # Call full_clean to ensure data is fully cleaned and validated
@@ -66,7 +68,7 @@ class CarMake(models.Model):
 
 
 class CarModel(models.Model):
-    CAR_TYPES=[
+    CAR_TYPES = [
         ('SEDAN', 'Sedan'),
         ('WAGON', 'Wagon'),
         ('SUV', 'SUV'),
@@ -74,7 +76,7 @@ class CarModel(models.Model):
         ('PICKUP', 'Pickup'),
         ('VAN', 'Van')
     ]
-    CAR_FUEL_TYPES=fuel_types=[
+    CAR_FUEL_TYPES = [
         ('GASOLINE', 'Gasoline'),
         ('DIESEL', 'Diesel'),
         ('CNG', 'CNG'),
@@ -92,11 +94,14 @@ class CarModel(models.Model):
     def remove_space_streaks(self, s):
         return re.sub(r'\s+', ' ', s)
 
-    name=models.CharField(max_length=50)
-    car_make=models.ForeignKey(CarMake, on_delete=models.CASCADE)    
-    car_type=models.CharField(max_length=20, choices=CAR_TYPES )
-    car_fuel_type=models.CharField(max_length=20, choices=CAR_FUEL_TYPES, blank=True)
-    year=models.IntegerField(validators=[
+    name = models.CharField(max_length=50)
+    car_make = models.ForeignKey(CarMake, on_delete=models.CASCADE)
+    car_type = models.CharField(max_length=20, choices=CAR_TYPES)
+    car_fuel_type = models.CharField(
+        max_length=20,
+        choices=CAR_FUEL_TYPES, blank=True
+    )
+    year = models.IntegerField(validators=[
         MaxValueValidator(2025),
         MinValueValidator(2000)
     ])
