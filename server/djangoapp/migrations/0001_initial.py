@@ -23,9 +23,18 @@ class Migration(migrations.Migration):
                     )),
                     ('name', models.CharField(max_length=100)),
                     ('description', models.TextField()),
-                    ('country_name', models.CharField(blank=True, max_length=50)),
-                    ('country_iso2', models.CharField(blank=True, max_length=2)),
-                    ('country_iso3', models.CharField(blank=True, max_length=3)),
+                    ('country_name', models.CharField(
+                                        blank=True,
+                                        max_length=50
+                                    )),
+                    ('country_iso2', models.CharField(
+                                        blank=True,
+                                        max_length=2
+                                    )),
+                    ('country_iso3', models.CharField(
+                                        blank=True,
+                                        max_length=3
+                                    )),
             ],
         ),
         migrations.CreateModel(
