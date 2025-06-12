@@ -60,19 +60,46 @@ class Migration(migrations.Migration):
                     verbose_name='ID'
                 )),
                 ('name', models.CharField(max_length=50)),
-                ('car_type', models.CharField(choices=[('SEDAN', 'Sedan'), ('WAGON', 'Wagon'),
-                    ('SUV', 'SUV'), ('COUPE', 'Coupe'), ('PICKUP', 'Pickup'), ('VAN', 'Van')], max_length=20)),
-                ('car_fuel_type', models.CharField(blank=True, choices=[('GASOLINE', 'Gasoline'),
-                    ('DIESEL', 'Diesel'), ('CNG', 'CNG'), ('BIO-DIESEL', 'Bio-Diesel'), ('LPG', 'LPG'),
-                    ('ETHANOL', 'Ethanol'), ('METHANOL', 'Methanol'), ('HYDROGEN', 'Hydrogen'),
-                    ('ELECTRIC', 'Electric'), ('HYBRID', 'Hybrid (Plug-in & Non-Plug-in)'),
-                    ('SOLAR', 'Solar Powered')], max_length=20)),
-                ('year', models.IntegerField(validators=[django.core.validators.MaxValueValidator(2025), 
-                                                        django.core.validators.MinValueValidator(2000)
-                                                        ])),
-                ('car_make', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
-                                                to='djangoapp.carmake'
-                                                )),
+                ('car_type', models.CharField(
+                                                choices=[
+                                                    ('SEDAN', 'Sedan'),
+                                                    ('WAGON', 'Wagon'),
+                                                    ('SUV', 'SUV'),
+                                                    ('COUPE', 'Coupe'),
+                                                    ('PICKUP', 'Pickup'),
+                                                    ('VAN', 'Van')
+                                                ],
+                                                max_length=20
+                                            )
+                ),
+                ('car_fuel_type', models.CharField(
+                                                    blank=True, 
+                                                    choices=[
+                                                        ('GASOLINE', 'Gasoline'),
+                                                        ('DIESEL', 'Diesel'),
+                                                        ('CNG', 'CNG'),
+                                                        ('BIO-DIESEL', 'Bio-Diesel'),
+                                                        ('LPG', 'LPG'),
+                                                        ('ETHANOL', 'Ethanol'),
+                                                        ('METHANOL', 'Methanol'),
+                                                        ('HYDROGEN', 'Hydrogen'),
+                                                        ('ELECTRIC', 'Electric'),
+                                                        ('HYBRID', 'Hybrid (Plug-in & Non-Plug-in)'),
+                                                        ('SOLAR', 'Solar Powered')
+                                                    ],
+                                                    max_length=20
+                                                )
+                ),
+                ('year', models.IntegerField(validators=[
+                                                django.core.validators.MaxValueValidator(2025), 
+                                                django.core.validators.MinValueValidator(2000)
+                                            ])
+                ),
+                ('car_make', models.ForeignKey(
+                                on_delete=django.db.models.deletion.CASCADE,
+                                to='djangoapp.carmake'
+                            )
+                ),
             ],
         ),
     ]
