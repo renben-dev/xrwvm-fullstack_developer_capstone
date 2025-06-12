@@ -23,12 +23,15 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('djangoapp/', include('djangoapp.urls')),
     path('', TemplateView.as_view(template_name="Home.html")),
-    path('about/',TemplateView.as_view(template_name="About.html")),
+    path('about/', TemplateView.as_view(template_name="About.html")),
     path('contact/', TemplateView.as_view(template_name="Contact.html")),
     path('login/', TemplateView.as_view(template_name="index.html")),
     path('register/', TemplateView.as_view(template_name="index.html")),
     path('dealers/', TemplateView.as_view(template_name="index.html")),
-    path('dealer/<int:dealer_id>',TemplateView.as_view(template_name="index.html")),
-    #added by renzo to review where the views come from
-    #path("chat/", views.chat_handler, name="chat"),
+    path(
+        'dealer/<int:dealer_id>',
+        TemplateView.as_view(template_name="index.html")
+    ),
+    # added by renzo to review where the views come from
+    # path("chat/", views.chat_handler, name="chat"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

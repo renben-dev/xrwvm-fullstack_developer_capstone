@@ -6,7 +6,7 @@ from . import views
 
 APP_NAME = 'djangoapp'
 urlpatterns = [
-    # # path for registration
+    # path for registration
 
     # path for login
         path(route='login', view=views.login_user, name='login'),
