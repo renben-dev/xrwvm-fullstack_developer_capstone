@@ -11,6 +11,7 @@ function App() {
             <Route path="/login" element={<LoginPanel />}       />
             <Route path="/register" element={<RegisterPanel />} />
             <Route path="/dealers" element= {<Dealers />}       />
+            <Route path="/dealer/:id" element= {<Dealer />}       />
         </Routes>
     );
 }
