@@ -34,7 +34,8 @@ SECRET_KEY = config('DJANGO_SECRET_KEY', default='fallback-secret-key')
 DEBUG = config('DEBUG', default=False, cast=bool)
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', default='localhost').split(',')
-CSRF_TRUSTED_ORIGINS = config('DJANGO_CSRF_TRUSTED_ORIGINS', default='').split(',')
+CSRF_TRUSTED_ORIGINS = \
+    config('DJANGO_CSRF_TRUSTED_ORIGINS', default='').split(',')
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [],
@@ -99,7 +100,10 @@ DATABASES = {
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME':
-        'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        (
+            'django.contrib.auth.password_validation.',
+            'UserAttributeSimilarityValidator'
+        ),
     },
     {
         'NAME':
