@@ -3,6 +3,7 @@
 import os
 from dotenv import load_dotenv
 import requests
+from django.http import JsonResponse
 
 load_dotenv()
 
@@ -17,13 +18,13 @@ sentiment_analyzer_url = os.getenv(
     default="http://localhost:5050/")
 
 if not sentiment_analyzer_url.endswith("/"):
-   sentiment_analyzer_url  += "/"
+    sentiment_analyzer_url  += "/"
 
 # def get_request(endpoint, **kwargs):
 # Add code for get requests to back end
 def get_request(endpoint, **kwargs):
     params = ""
-    if(kwargs):
+    if kwargs:
         for key,value in kwargs.items():
             params=params+key+"="+value+"&"
 
@@ -37,12 +38,12 @@ def get_request(endpoint, **kwargs):
     except:
         # If any error occurs
         print("Network exception occurred")
+        return JsonResponse({"status": 500, "message": "Network exception occurred"})
 
 # def analyze_review_sentiments(text):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
-    
     request_url = sentiment_analyzer_url+"analyze/"+text
     try:
         # Call get method of requests library with URL and parameters
@@ -50,7 +51,7 @@ def analyze_review_sentiments(text):
         return response.json()
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
-        print("Network exception occurred")
+        return JsonResponse({"status": 500, "message": f"Unexpected {err=}, {type(err)=}"})
 
 # def post_review(data_dict):
 def post_review(data_dict):
@@ -61,5 +62,6 @@ def post_review(data_dict):
         return response.json()
     except:
         print("Network exception occurred")
-
+        return JsonResponse({"status": 500, "message": "Network exception occurred"})
+        
 # Add code for posting review
