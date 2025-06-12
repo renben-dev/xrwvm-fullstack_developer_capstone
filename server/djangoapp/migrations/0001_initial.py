@@ -15,9 +15,12 @@ class Migration(migrations.Migration):
     operations = [
         migrations.CreateModel(
             name='CarMake',
-            fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True,
-                    serialize=False, verbose_name='ID')),
+            fields=[('id', models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name='ID'
+                    )),
                 ('name', models.CharField(max_length=100)),
                 ('description', models.TextField()),
                 ('country_name', models.CharField(blank=True, max_length=50)),
@@ -28,8 +31,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='Person',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True,
-                    serialize=False, verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID'
+                )),
                 ('first_name', models.CharField(max_length=20)),
                 ('last_name', models.CharField(max_length=20)),
             ],
@@ -37,8 +44,12 @@ class Migration(migrations.Migration):
         migrations.CreateModel(
             name='CarModel',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False,
-                    verbose_name='ID')),
+                ('id', models.BigAutoField(
+                    auto_created=True,
+                    primary_key=True,
+                    serialize=False,
+                    verbose_name='ID'
+                )),
                 ('name', models.CharField(max_length=50)),
                 ('car_type', models.CharField(choices=[('SEDAN', 'Sedan'), ('WAGON', 'Wagon'),
                     ('SUV', 'SUV'), ('COUPE', 'Coupe'), ('PICKUP', 'Pickup'), ('VAN', 'Van')], max_length=20)),
@@ -48,9 +59,11 @@ class Migration(migrations.Migration):
                     ('ELECTRIC', 'Electric'), ('HYBRID', 'Hybrid (Plug-in & Non-Plug-in)'),
                     ('SOLAR', 'Solar Powered')], max_length=20)),
                 ('year', models.IntegerField(validators=[django.core.validators.MaxValueValidator(2025), 
-                    django.core.validators.MinValueValidator(2000)])),
+                                                        django.core.validators.MinValueValidator(2000)
+                                                        ])),
                 ('car_make', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE,
-                    to='djangoapp.carmake')),
+                                                to='djangoapp.carmake'
+                                                )),
             ],
         ),
     ]
