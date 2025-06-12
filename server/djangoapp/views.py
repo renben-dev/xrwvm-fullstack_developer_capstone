@@ -119,9 +119,9 @@ def get_dealer_reviews(request, dealer_id):
             sentiment = analyze_review_sentiments(review['review'])
             review['sentiment'] = sentiment
             print(f"review: {review}")
-        return JsonResponse({"status" : 200, "reviews" : reviews})
+        return JsonResponse({"status":200, "reviews":reviews})
 
-    return JsonResponse({"status" : 4000 , "message" : "Bad request"})
+    return JsonResponse({"status":4000 , "message":"Bad request"})
 
 # Create a `get_dealer_details` view to render the dealer details
 # def get_dealer_details(request, dealer_id):
@@ -130,9 +130,9 @@ def get_dealer_details(request, dealer_id):
     if dealer_id:
         endpoint = f"/fetchDealer/{dealer_id}"
         dealership = get_request(endpoint)
-        return JsonResponse({"status" : 200, "dealer" : dealership })
+        return JsonResponse({"status":200, "dealer":dealership })
 
-    return JsonResponse({"status" : 400, "message": "Bad request"})
+    return JsonResponse({"status":400, "message": "Bad request"})
 
 
 # Create a `add_review` view to submit a review
@@ -143,11 +143,15 @@ def add_review(request):
         data = json.loads(request.body)
         try:
             response = post_review(data)
-            return JsonResponse({"status" : 200})
+            return JsonResponse({"status":200})
         except:
-            return JsonResponse({"status" : 401, "message" : "Error in review posting"})
+            return JsonResponse({"status":401, "message":"Error in review posting"})
     else:
-        return JsonResponse({"status" : 403,
-            "message" : "Unauthorize: login or register to post reviews"})
+        return JsonResponse({
+                                "status":403,
+                                "message":"Unauthorize: login or register to post reviews"
+                            })
+
+
 def chat_handler(request):
     return JsonResponse({"status": "chat service coming soon"})
