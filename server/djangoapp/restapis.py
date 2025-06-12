@@ -7,10 +7,17 @@ import requests
 load_dotenv()
 
 backend_url = os.getenv(
-    'backend_url', default="http://localhost:3030")
+    'backend_url', default="http://localhost:3030").strip()
+
+if backend_url.endswith("/"):
+    backend_url = backend_url[:-1]
+
 sentiment_analyzer_url = os.getenv(
     'sentiment_analyzer_url',
     default="http://localhost:5050/")
+
+if not sentiment_analyzer_url.endswith("/"):
+   sentiment_analyzer_url  += "/"
 
 # def get_request(endpoint, **kwargs):
 # Add code for get requests to back end
@@ -35,6 +42,7 @@ def get_request(endpoint, **kwargs):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
+    
     request_url = sentiment_analyzer_url+"analyze/"+text
     try:
         # Call get method of requests library with URL and parameters
