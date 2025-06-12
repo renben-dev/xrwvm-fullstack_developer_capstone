@@ -3,34 +3,28 @@
 car make and model Django models
 """
 import re
-from datetime import datetime, timedelta
-
 from django.db import models
-from django.utils.timezone import now
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 
 
-
 # Create your models here.
-
 # <HINT> Create a Car Make model `class CarMake(models.Model)`:
 # - Name
 # - Description
 # - Any other fields you would like to include in car make model
 # - __str__ method to print a car make object
 class Person(models.Model):
-    first_name = models.CharField(max_length=20)
-
-    last_name = models.CharField(max_length=20)
+    first_name=models.CharField(max_length=20)
+    last_name=models.CharField(max_length=20)
 
 
 class CarMake(models.Model):
-    name = models.CharField(max_length = 100, null = False, blank = False)
-    description = models.TextField()
-    country_name = models.CharField(max_length = 50, blank = True)
-    country_iso2 = models.CharField(max_length = 2, blank = True)
-    country_iso3 = models.CharField(max_length = 3, blank = True)
+    name=models.CharField(max_length=100, null=False, blank=False)
+    description=models.TextField()
+    country_name=models.CharField(max_length=50, blank=True)
+    country_iso2=models.CharField(max_length=2, blank=True)
+    country_iso3=models.CharField(max_length=3, blank=True)
 
      # Replace one or more spaces with a single space
     def remove_space_streaks(self, s):
@@ -39,14 +33,14 @@ class CarMake(models.Model):
     def clean(self):
         super().clean()  # Call the parent class's clean method
 
-        self.name = self.remove_space_streaks(self.name.strip().title()) if self.name else ''
-        self.description = self.remove_space_streaks(self.description.strip()) \
+        self.name=self.remove_space_streaks(self.name.strip().title()) if self.name else ''
+        self.description=self.remove_space_streaks(self.description.strip()) \
             if self.description else ''
-        self.country_name = self.remove_space_streaks(self.country_name.strip().title()) \
+        self.country_name=self.remove_space_streaks(self.country_name.strip().title()) \
             if self.country_name else ''
-        self.country_iso2 = self.country_iso2.strip().upper() \
+        self.country_iso2=self.country_iso2.strip().upper() \
             if self.country_iso2 else ''
-        self.country_iso3 = self.country_iso3.strip().upper() \
+        self.country_iso3=self.country_iso3.strip().upper() \
             if self.country_iso3 else ''
 
         if not self.name.strip():
@@ -70,9 +64,9 @@ class CarMake(models.Model):
     def __str__(self):
         return self.name
 
-class CarModel(models.Model):
 
-    CAR_TYPES = [
+class CarModel(models.Model):
+    CAR_TYPES=[
         ('SEDAN', 'Sedan'),
         ('WAGON', 'Wagon'),
         ('SUV', 'SUV'),
@@ -80,7 +74,7 @@ class CarModel(models.Model):
         ('PICKUP', 'Pickup'),
         ('VAN', 'Van')
     ]
-    CAR_FUEL_TYPES = fuel_types = [
+    CAR_FUEL_TYPES=fuel_types=[
         ('GASOLINE', 'Gasoline'),
         ('DIESEL', 'Diesel'),
         ('CNG', 'CNG'),
@@ -98,13 +92,11 @@ class CarModel(models.Model):
     def remove_space_streaks(self, s):
         return re.sub(r'\s+', ' ', s)
 
-    name = models.CharField(max_length = 50)
-    car_make = models.ForeignKey(CarMake, on_delete = models.CASCADE)
-    
-    car_type = models.CharField(max_length = 20, choices = CAR_TYPES )
-    car_fuel_type = models.CharField(max_length = 20, choices = CAR_FUEL_TYPES, blank = True)
-
-    year = models.IntegerField(validators=[
+    name=models.CharField(max_length=50)
+    car_make=models.ForeignKey(CarMake, on_delete=models.CASCADE)    
+    car_type=models.CharField(max_length=20, choices=CAR_TYPES )
+    car_fuel_type=models.CharField(max_length=20, choices=CAR_FUEL_TYPES, blank=True)
+    year=models.IntegerField(validators=[
         MaxValueValidator(2025),
         MinValueValidator(2000)
     ])
