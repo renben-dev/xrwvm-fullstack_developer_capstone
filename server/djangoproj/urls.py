@@ -27,6 +27,7 @@ urlpatterns = [
     path('contact/', TemplateView.as_view(template_name="Contact.html")),
     path('login/', TemplateView.as_view(template_name="index.html")),
     path('register/', TemplateView.as_view(template_name="index.html")),
+    path('dealers/', TemplateView.as_view(template_name="index.html")),
     #added by renzo to review where the views come from
     #path("chat/", views.chat_handler, name="chat"),
 ] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
