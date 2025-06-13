@@ -31,7 +31,7 @@ const Register = () => {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                "usermame": userName,
+                "username": userName,
                 "password": password,
                 "firstName": firstName,
                 "lastName": lastName,
