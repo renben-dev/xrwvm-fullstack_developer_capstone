@@ -3,7 +3,9 @@
 import os
 from dotenv import load_dotenv
 import requests
+import urllib.parse
 from django.http import JsonResponse
+
 
 load_dotenv()
 
@@ -48,6 +50,9 @@ def get_request(endpoint, **kwargs):
 # request_url = sentiment_analyzer_url+"analyze/"+text
 # Add code for retrieving sentiments
 def analyze_review_sentiments(text):
+    # Renzo: Encode special chars here: it wa not working before
+    encoded_text = urllib.parse.quote(text)
+    print(encoded_text)  
     request_url = sentiment_analyzer_url+"analyze/"+text
     try:
         # Call get method of requests library with URL and parameters
