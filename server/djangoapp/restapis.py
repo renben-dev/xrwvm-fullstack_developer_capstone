@@ -52,12 +52,12 @@ def get_request(endpoint, **kwargs):
 def analyze_review_sentiments(text):
     # Renzo: Encode special chars here: it wa not working before
     encoded_text = urllib.parse.quote(text)
-    print(encoded_text)  
+    print(encoded_text)
     request_url = sentiment_analyzer_url+"analyze/"+encoded_text
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
-        sentiment=""
+        sentiment = ""
         try:
             data = response.json()
             sentiment = data.get("sentiment")
