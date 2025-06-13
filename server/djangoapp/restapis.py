@@ -53,17 +53,24 @@ def analyze_review_sentiments(text):
     # Renzo: Encode special chars here: it wa not working before
     encoded_text = urllib.parse.quote(text)
     print(encoded_text)  
-    request_url = sentiment_analyzer_url+"analyze/"+text
+    request_url = sentiment_analyzer_url+"analyze/"+encoded_text
     try:
         # Call get method of requests library with URL and parameters
         response = requests.get(request_url)
-        return response.json()
+        sentiment=""
+        try:
+            data = response.json()
+            sentiment = data.get("sentiment")
+        except ValueError:
+            print("Response not valid JSON:", response.text)
+        return sentiment
     except Exception as err:
         print(f"Unexpected {err=}, {type(err)=}")
-        return JsonResponse({
-            "status": 500,
-            "message": f"Unexpected {err=}, {type(err)=}"
-        })
+        return "neutral"
+        # return JsonResponse({
+        #     "status": 500,
+        #     "message": f"Unexpected {err=}, {type(err)=}"
+        # })
 
 
 # def post_review(data_dict):
