@@ -151,6 +151,7 @@ def add_review(request):
         data = json.loads(request.body)
         try:
             response = post_review(data)
+            print(">>> response to React:", response_json)
             return JsonResponse(response)
         except Exception:
             return JsonResponse({
