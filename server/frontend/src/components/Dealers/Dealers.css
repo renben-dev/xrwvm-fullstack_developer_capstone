@@ -59,7 +59,8 @@ table{
     margin: 10px; /* Optional margin for spacing */
     font-style: italic;
     color: gray;
-    font-size: small;
+    font-size: 18px;
+    text-align: center;
 }
 
 .review {
