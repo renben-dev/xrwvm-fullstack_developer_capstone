@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: api
+  template:
+    metadata:
+      labels:
+        app: api
+    spec:
+      containers:
+      - name: api
+        image: us.icr.io/renben-ibm-course-cr/dealership-db-nodeapp:v1.0.0
+        ports:
+        - containerPort: 3030
+        env:
+        - name: MONGO_URL
+          value: "mongodb://mongo:27017/your_database_name"  # adjust if needed
